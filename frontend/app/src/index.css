@@ -1,8 +1,11 @@
 /* src/index.css */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap');
+
 @import "tailwindcss";
 
-/* ✅ Definição das cores personalizadas para o Tailwind v4 */
+/* ===== TEMA PERSONALIZADO ===== */
 @theme {
+  /* Cores primárias (azul) para componentes de formulário */
   --color-primary-50: #eff6ff;
   --color-primary-100: #dbeafe;
   --color-primary-200: #bfdbfe;
@@ -13,36 +16,221 @@
   --color-primary-700: #1d4ed8;
   --color-primary-800: #1e40af;
   --color-primary-900: #1e3a8a;
+
+  /* Cores do tema escuro/luxo */
+  --color-background: hsl(210 30% 8%);
+  --color-foreground: hsl(40 20% 90%);
+  --color-card: hsl(210 25% 11%);
+  --color-card-foreground: hsl(40 20% 90%);
+  --color-popover: hsl(210 25% 11%);
+  --color-popover-foreground: hsl(40 20% 90%);
+  --color-primary: hsl(40 55% 55%);
+  --color-primary-foreground: hsl(210 30% 8%);
+  --color-secondary: hsl(210 20% 15%);
+  --color-secondary-foreground: hsl(40 20% 85%);
+  --color-muted: hsl(210 15% 18%);
+  --color-muted-foreground: hsl(210 10% 55%);
+  --color-accent: hsl(40 45% 45%);
+  --color-accent-foreground: hsl(40 20% 95%);
+  --color-destructive: hsl(0 84.2% 60.2%);
+  --color-destructive-foreground: hsl(210 40% 98%);
+  --color-border: hsl(210 15% 18%);
+  --color-input: hsl(210 15% 18%);
+  --color-ring: hsl(40 55% 55%);
+
+  /* Cores nomeadas */
+  --color-gold: hsl(40 55% 55%);
+  --color-gold-light: hsl(40 50% 70%);
+  --color-gold-dark: hsl(40 60% 40%);
+  --color-navy: hsl(210 30% 8%);
+  --color-navy-light: hsl(210 25% 14%);
+  --color-cream: hsl(40 20% 90%);
+
+  /* Sidebar */
+  --color-sidebar-background: hsl(210 25% 11%);
+  --color-sidebar-foreground: hsl(40 20% 90%);
+  --color-sidebar-primary: hsl(40 55% 55%);
+  --color-sidebar-primary-foreground: hsl(210 30% 8%);
+  --color-sidebar-accent: hsl(210 20% 15%);
+  --color-sidebar-accent-foreground: hsl(40 20% 90%);
+  --color-sidebar-border: hsl(210 15% 18%);
+  --color-sidebar-ring: hsl(40 55% 55%);
+
+  --radius: 0.25rem;
+
+  --font-heading: 'Cormorant Garamond', serif;
+  --font-body: 'Montserrat', sans-serif;
 }
 
+/* ===== BASE ===== */
 @layer base {
+  * {
+    @apply border-border;
+  }
+
   body {
-    @apply bg-gray-50;
+    @apply bg-background text-foreground;
+    font-family: var(--font-body);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
   }
 }
 
+/* ===== UTILITIES ===== */
+@layer utilities {
+  .text-gold-gradient {
+    background: linear-gradient(135deg, var(--color-gold-light), var(--color-gold), var(--color-gold-dark));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .bg-gold-gradient {
+    background: linear-gradient(135deg, var(--color-gold-light), var(--color-gold), var(--color-gold-dark));
+  }
+
+  .border-gold-gradient {
+    border-image: linear-gradient(135deg, var(--color-gold-light), var(--color-gold), var(--color-gold-dark)) 1;
+  }
+
+  .section-padding {
+    @apply py-24 px-6 md:px-12 lg:px-24;
+  }
+
+  .heading-xl {
+    font-family: var(--font-heading);
+    @apply text-5xl md:text-7xl lg:text-8xl font-light tracking-wide;
+  }
+
+  .heading-lg {
+    font-family: var(--font-heading);
+    @apply text-3xl md:text-5xl font-light tracking-wide;
+  }
+
+  .heading-md {
+    font-family: var(--font-heading);
+    @apply text-2xl md:text-3xl font-light tracking-wide;
+  }
+
+  .body-text {
+    font-family: var(--font-body);
+    @apply text-sm md:text-base font-light leading-relaxed tracking-wider;
+  }
+
+  .label-text {
+    font-family: var(--font-body);
+    @apply text-xs uppercase tracking-[0.3em] font-medium;
+  }
+}
+
+/* ===== COMPONENTES ===== */
 @layer components {
+  /* Botões */
   .btn-primary {
-    @apply w-full bg-primary-600 text-white py-2 px-4 rounded-md hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply px-4 py-2 rounded-md font-medium transition-colors 
+           focus:outline-none focus:ring-2 focus:ring-offset-2 
+           disabled:opacity-50 disabled:cursor-not-allowed;
+    background-color: var(--color-primary-600);
+    color: white;
+  }
+  .btn-primary:hover {
+    background-color: var(--color-primary-700);
+  }
+  .btn-primary:focus {
+    --tw-ring-color: var(--color-primary-500);
   }
   
   .btn-secondary {
-    @apply w-full bg-gray-200 text-gray-900 py-2 px-4 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply px-4 py-2 rounded-md font-medium transition-colors 
+           focus:outline-none focus:ring-2 focus:ring-offset-2 
+           disabled:opacity-50 disabled:cursor-not-allowed;
+    background-color: var(--color-muted);
+    color: var(--color-foreground);
+  }
+  .btn-secondary:hover {
+    background-color: var(--color-secondary);
+  }
+  .btn-secondary:focus {
+    --tw-ring-color: var(--color-muted-foreground);
   }
   
   .btn-danger {
-    @apply w-full bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors;
+    @apply px-4 py-2 rounded-md font-medium transition-colors 
+           focus:outline-none focus:ring-2 focus:ring-offset-2;
+    background-color: var(--color-destructive);
+    color: white;
+  }
+  .btn-danger:hover {
+    background-color: hsl(0 74.2% 50.2%);
+  }
+  .btn-danger:focus {
+    --tw-ring-color: var(--color-destructive);
   }
   
+  .btn-outline {
+    @apply px-4 py-2 rounded-md font-medium transition-colors 
+           focus:outline-none focus:ring-2 focus:ring-offset-2 
+           border border-gold text-gold hover:bg-gold hover:text-navy;
+  }
+  
+  /* Campos de formulário */
   .input-field {
-    @apply w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent;
+    @apply w-full px-3 py-2 rounded-md focus:outline-none focus:ring-2;
+    background-color: var(--color-input);
+    border: 1px solid var(--color-border);
+    color: var(--color-foreground);
+  }
+  .input-field:focus {
+    --tw-ring-color: var(--color-ring);
+    border-color: transparent;
+  }
+  .input-field::placeholder {
+    color: var(--color-muted-foreground);
   }
   
+  /* Cards */
   .card {
-    @apply bg-white rounded-lg shadow-md p-8;
+    background-color: var(--color-card);
+    color: var(--color-card-foreground);
+    @apply rounded-lg shadow-md p-8;
   }
 
   .error-message {
-    @apply text-sm text-red-600 mt-1;
+    @apply text-sm mt-1;
+    color: var(--color-destructive);
   }
+  
+  /* Links */
+  .nav-link {
+    @apply text-sm uppercase tracking-wider transition-colors;
+    color: var(--color-foreground);
+  }
+  .nav-link:hover {
+    color: var(--color-gold);
+  }
+}
+
+/* ===== SCROLL SUAVE ===== */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ===== SCROLLBAR PERSONALIZADA ===== */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-navy);
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(40 55% 55% / 0.3);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(40 55% 55% / 0.5);
 }
